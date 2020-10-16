@@ -1,0 +1,44 @@
+﻿@model IEnumerable<FPTTraining0.Models.Trainee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index Trainer</h2>
+@Html.ActionLink("Create a new Trainee", "Create")
+@using (Html.BeginForm("Index", "Trainees", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table table-striped">
+    <tr>
+        <th>Id</th>
+        <th>Trainee Name</th>
+        <th>Email</th>
+        <th>Password Email</th>
+        <th>Year of Birth</th>
+        <th>Course</th>
+        @if (User.IsInRole("staff"))
+        {
+            <th>Delete</th>
+            <th>Edit</th>
+        }
+    </tr>
+    @foreach (var trainee in Model)
+    {
+<tr>
+    <td>@trainee.Id</td>
+    <td>@trainee.Name</td>
+    <td>@trainee.TraineeEmail</td>
+    <td>@trainee.PassEmail</td>
+    <td>@trainee.Birth</td>
+    <td>@trainee.Course.Name</td>
+    <td>@Html.ActionLink("Delete this trainer", "Delete", new { id = trainee.Id })</td>
+    <td>@Html.ActionLink("Edit this trainer", "Edit", new { id = trainee.Id })</td>
+</tr>
+    }
+</table>
+@Html.ActionLink("Back to home", "Index", "Home")

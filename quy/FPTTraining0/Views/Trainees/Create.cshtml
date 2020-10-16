@@ -1,0 +1,42 @@
+﻿@model FPTTraining0.ViewModels.TraineeCourseViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create a new Trainee</h2>
+
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+@using (Html.BeginForm("Create", "Trainees", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Trainee.Name)
+        @Html.TextBoxFor(p => p.Trainee.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Trainee.Name, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Trainee.TraineeEmail)
+        @Html.TextBoxFor(p => p.Trainee.TraineeEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Trainee.TraineeEmail, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Trainee.PassEmail)
+        @Html.TextBoxFor(p => p.Trainee.PassEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Trainee.PassEmail, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Trainee.Birth)
+        @Html.TextBoxFor(p => p.Trainee.Birth, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.Trainee.Birth, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.Trainee.Course.Name)
+        @Html.DropDownListFor(p => p.Trainee.CourseId,
+         new SelectList(Model.Courses, "Id", "Name"),
+         "Select Course Name",
+         new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+}
+@Html.ActionLink("Back to Index", "Index")
