@@ -12,7 +12,7 @@ using mvc2;
 using mvc2.Models;
 
 
-namespace TuyenMinh2.mvc.Controllers
+namespace mvc2.Controllers
 {
     [Authorize]
     public class AccountController : Controller

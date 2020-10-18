@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using mvc2.ViewModels;
 using mvc2.Models;
 
-namespace mvc.Controllers
+namespace mvc2.Controllers
 {
     public class ManageUsersController : Controller
     {

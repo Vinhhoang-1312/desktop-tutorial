@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using mvc2.Models;
-using TuyenMinh2.mvc.Controllers;
+using mvc2.Controllers;
 
 namespace mvc2.Controllers
 {
