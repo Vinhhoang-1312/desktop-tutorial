@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Hoang-Khoa</h1>
+    <h2>
+     
+    </h2>
+
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @if (Request.IsAuthenticated && User.IsInRole("Trainee"))
+        {
+           
+                            <p><a onclick="window.location='@Url.Action("Index", "TraineeCourses")'" class="btn btn-primary btn-lg">Assigned Courses &raquo;</a></p>
+                       
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("Trainer"))
+        {
+  
+                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" class="btn btn-primary btn-lg">Assigned Topics &raquo;</a></p>
+                                                           @Html.ActionLink(" Profile", "About", "Home")
+
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <p><a onclick="window.location='@Url.Action("UsersWithRoles", "ManageUsers")'" class="btn btn-primary btn-lg">Manage Accounts &raquo;</a></p>
+
+        }
+        @if (Request.IsAuthenticated && User.IsInRole("TrainingStaff"))
+        {
+    
+                            <p><a onclick="window.location='@Url.Action("Index", "Categories")'" class="btn btn-primary btn-lg">Manage Category &raquo;</a></p>
+                    
+                            <p><a onclick="window.location='@Url.Action("Index", "Courses")'" class="btn btn-primary btn-lg">Manage Courses &raquo;</a></p>
+                  
+                            <p><a onclick="window.location='@Url.Action("Index", "Topics")'" class="btn btn-primary btn-lg">Manage Topics &raquo;</a></p>
+          
+                            <p><a onclick="window.location='@Url.Action("Index", "ManagerStaffViewModels")'" class="btn btn-primary btn-lg">Manage Account &raquo;</a></p>
+                     
+                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" class="btn btn-primary btn-lg">Assign Trainers To Topics &raquo;</a></p>
+                     
+                            <p><a onclick="window.location='@Url.Action("Index", "TraineeCourses")'" class="btn btn-primary btn-lg">Assign Trainee To Courses &raquo;</a></p>
+                       
+        }
+    </div>
+</div>
