@@ -1,0 +1,22 @@
+﻿@model hoangkhoa.ViewModels.TraineeCourseViewModel
+@{ ViewBag.Title = "Edit"; }
+
+<h2>Edit</h2>
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+@using (Html.BeginForm("Edit", "TraineeCourses", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(tr => tr.TraineeCourse.Course.Name)
+        @Html.DropDownListFor(tr => tr.TraineeCourse.CourseId
+           , new SelectList(Model.Courses, "Id", "Name"),
+           "Select Course",
+           new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

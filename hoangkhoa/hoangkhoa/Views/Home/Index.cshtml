@@ -3,7 +3,7 @@
 }
 
 <div class="jumbotron">
-    <h1>Hoang-Khoa</h1>
+    <h1>FPT Training</h1>
     <h2>
      
     </h2>
@@ -13,36 +13,36 @@
     <div class="col-md-4">
         @if (Request.IsAuthenticated && User.IsInRole("Trainee"))
         {
-           
-                            <p><a onclick="window.location='@Url.Action("Index", "TraineeCourses")'" class="btn btn-primary btn-lg">Assigned Courses &raquo;</a></p>
+                
+                            <p> <a onclick="window.location='@Url.Action("Index", "TraineeCourses")'"  type="button" class="btn btn-default">Assigned Courses </a> </p>
                        
         }
         @if (Request.IsAuthenticated && User.IsInRole("Trainer"))
         {
   
-                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" class="btn btn-primary btn-lg">Assigned Topics &raquo;</a></p>
-                                                           @Html.ActionLink(" Profile", "About", "Home")
+                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" type="button" class="btn btn-default">Assigned Topics</a></p>
+                                @Html.ActionLink(" Profile", "About", "Home")                           
 
         }
         @if (Request.IsAuthenticated && User.IsInRole("Admin"))
         {
-            <p><a onclick="window.location='@Url.Action("UsersWithRoles", "ManageUsers")'" class="btn btn-primary btn-lg">Manage Accounts &raquo;</a></p>
+            <p><a onclick="window.location='@Url.Action("UsersWithRoles", "ManageUsers")'" type="button" class="btn btn-default">Manage Accounts</a></p>
 
         }
         @if (Request.IsAuthenticated && User.IsInRole("TrainingStaff"))
         {
     
-                            <p><a onclick="window.location='@Url.Action("Index", "Categories")'" class="btn btn-primary btn-lg">Manage Category &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "Categories")'" type="button" class="btn btn-default">Manage Category &raquo;</a></p>
                     
-                            <p><a onclick="window.location='@Url.Action("Index", "Courses")'" class="btn btn-primary btn-lg">Manage Courses &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "Courses")'" type="button" class="btn btn-default">Manage Courses &raquo;</a></p>
                   
-                            <p><a onclick="window.location='@Url.Action("Index", "Topics")'" class="btn btn-primary btn-lg">Manage Topics &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "Topics")'" type="button" class="btn btn-default">Manage Topics &raquo;</a></p>
           
-                            <p><a onclick="window.location='@Url.Action("Index", "ManagerStaffViewModels")'" class="btn btn-primary btn-lg">Manage Account &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "ManagerStaffViewModels")'" type="button" class="btn btn-default">Manage Account &raquo;</a></p>
                      
-                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" class="btn btn-primary btn-lg">Assign Trainers To Topics &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "TrainerTopics")'" type="button" class="btn btn-default">Assign Trainers To Topics &raquo;</a></p>
                      
-                            <p><a onclick="window.location='@Url.Action("Index", "TraineeCourses")'" class="btn btn-primary btn-lg">Assign Trainee To Courses &raquo;</a></p>
+                            <p><a onclick="window.location='@Url.Action("Index", "TraineeCourses")'" type="button" class="btn btn-default">Assign Trainee To Courses &raquo;</a></p>
                        
         }
     </div>

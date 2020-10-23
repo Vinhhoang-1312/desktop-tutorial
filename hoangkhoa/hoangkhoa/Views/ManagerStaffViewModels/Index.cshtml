@@ -3,7 +3,7 @@
 @if (Request.IsAuthenticated && User.IsInRole("TrainingStaff"))
 {
 <p>
-    <a onclick="window.location='@Url.Action("Register", "Account")'" class="btn btn-primary btn-lg">New User &raquo;</a>
+    <a onclick="window.location='@Url.Action("Register", "Account")'" type="button" class="btn btn-default">New User </a>
 </p>}
 <h3>Trainee</h3>
 <div class="panel-body">

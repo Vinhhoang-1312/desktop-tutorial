@@ -5,6 +5,7 @@
 <h2>Index</h2>
 
 <p>
+
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -12,7 +13,7 @@
         <th>Name</th>
         <th>Edit</th>
         <th>Delete</th>
-        <th>Details</th>
+      
 
     </tr>
 
@@ -22,10 +23,9 @@
     <td>@topic.Name</td>
     <td>@Html.ActionLink("Edit", "Edit", new { id = topic.Id })</td>
     <td>@Html.ActionLink("Delete", "Delete", new { id = topic.Id })</td>
-    <td>@Html.ActionLink("Details", "Details", new { id = topic.Id })</td>
+   
 
-</tr>
-}
+</tr>}
 
 </table>
 
