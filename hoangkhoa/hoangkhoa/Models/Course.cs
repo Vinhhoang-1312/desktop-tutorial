@@ -9,6 +9,7 @@ namespace hoangkhoa.Models
 {
     public class Course
     {
+
         public int Id { get; set; }
 
         [Required]
@@ -22,6 +23,6 @@ namespace hoangkhoa.Models
 
         public int TopicId { get; set; }
         public Topic Topic { get; set; }
- 
+
     }
 }

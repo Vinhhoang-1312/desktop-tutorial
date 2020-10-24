@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using hoangkhoa.Models;
 using hoangkhoa.ViewModels;
+using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace hoangkhoa.Controllers
 {
 	public class CoursesController : Controller
 	{
+
+
+
 		private ApplicationDbContext _context;
 		public CoursesController()
 		{
@@ -22,13 +25,14 @@ namespace hoangkhoa.Controllers
 		public ActionResult Index(string searchString)
 		{
 			var courses = _context.Courses
-			.Include(p => p.Category);
+			.Include(p => p.Category).Include(c => c.Topic);
 
 			if (!String.IsNullOrEmpty(searchString))
 			{
 				courses = courses.Where(
 					s => s.Name.Contains(searchString) ||
-					s.Category.Name.Contains(searchString));
+					s.Category.Name.Contains(searchString) ||
+					s.Topic.Name.Contains(searchString));
 
 			}
 
@@ -42,6 +46,7 @@ namespace hoangkhoa.Controllers
 			var viewModel = new CourseCategoryViewModel
 			{
 				Categories = _context.Categories.ToList(),
+				Topics = _context.Topics.ToList()
 			};
 			return View(viewModel);
 		}
@@ -59,6 +64,7 @@ namespace hoangkhoa.Controllers
 			{
 				Name = course.Name,
 				CategoryId = course.CategoryId,
+				TopicId = course.TopicId,
 			};
 
 			_context.Courses.Add(newCourse);
@@ -101,6 +107,7 @@ namespace hoangkhoa.Controllers
 			{
 				Course = courseInDb,
 				Categories = _context.Categories.ToList(),
+				Topics = _context.Topics.ToList()
 			};
 
 			return View(viewModel);
@@ -125,6 +132,7 @@ namespace hoangkhoa.Controllers
 
 			courseInDb.Name = course.Name;
 			courseInDb.CategoryId = course.CategoryId;
+			courseInDb.TopicId = course.TopicId;
 			_context.SaveChanges();
 
 			return RedirectToAction("Index");
