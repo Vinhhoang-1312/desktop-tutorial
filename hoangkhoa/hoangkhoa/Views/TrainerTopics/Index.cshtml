@@ -13,37 +13,42 @@
 
     @Html.ActionLink("View all Trainer", "Index", "TrainerTopics")
 </p>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Trainer)
-                        </th>
+               
+                {
+                    @Html.ActionLink("Assign Trainer to Topic", "Create")
+                }
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Trainer)
+                                        </th>
 
-                        <th>
-                            @Html.DisplayNameFor(model => model.Topic)
-                        </th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Topic)
+                                        </th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+
+                                    </tr>
+
+                                    @foreach (var item in Model)
+                                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trainer.UserName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Topic.Name)
+                        </td>
+
+                        <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
+                        <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
 
                     </tr>
+}
 
-                    @foreach (var item in Model)
-                    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Trainer.UserName)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.Topic.Name)
-        </td>
-
-        <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
-        <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
-
-    </tr>}
-
-                </table>}
+                                </table>}
 @if (User.IsInRole("Trainer"))
 {<table class="table">
         <tr>
@@ -60,6 +65,7 @@
         @Html.DisplayFor(modelItem => item.Topic.Name)
     </td>
 
-</tr>}
+</tr>
+}
     </table>}
 
