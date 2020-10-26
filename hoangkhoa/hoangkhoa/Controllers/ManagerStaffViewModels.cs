@@ -32,9 +32,9 @@ namespace hoangkhoa.Controllers
 
 
             var role2 = (from r in _context.Roles where r.Name.Contains("Trainer") select r).FirstOrDefault();
-            var admins = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role2.Id)).ToList();
+            var users2 = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role2.Id)).ToList();
 
-            var adminVM = admins.Select(user => new ManagerStaffViewModel
+            var user2VM = users2.Select(user => new ManagerStaffViewModel
             {
                 UserName = user.UserName,
                 Email = user.Email,
@@ -43,7 +43,7 @@ namespace hoangkhoa.Controllers
             }).ToList();
 
 
-            var model = new ManagerStaffViewModel { Trainee = userVM, Trainer = adminVM };
+            var model = new ManagerStaffViewModel { Trainee = userVM, Trainer = user2VM };
             return View(model);
         }
         [HttpGet]
