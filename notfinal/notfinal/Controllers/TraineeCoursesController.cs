@@ -1,0 +1,144 @@
+﻿using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using notfinal.Models;
+using System.Data.Entity;
+using notfinal.ViewModels;
+
+namespace notfinal.Controllers
+{
+    public class TraineeCoursesController : Controller
+    {
+        private ApplicationDbContext _context;
+
+        public TraineeCoursesController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        public ActionResult Index()
+        {
+            if (User.IsInRole("TrainingStaff"))
+            {
+                var traineecourses = _context.TraineeCourses.Include(t => t.Course).Include(t => t.Trainee).ToList();
+                return View(traineecourses);
+            }
+            if (User.IsInRole("Trainee"))
+            {
+                var traineeId = User.Identity.GetUserId();
+                var Res = _context.TraineeCourses.Where(e => e.TraineeId == traineeId).Include(t => t.Course).ToList();
+                return View(Res);
+            }
+            return View("Login");
+        }
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Create()
+        {
+            //get trainee
+            var role = (from r in _context.Roles where r.Name.Contains("Trainee") select r).FirstOrDefault();
+            var users = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
+
+            //get Course
+
+            var courses = _context.Courses.ToList();
+
+            var TraineeCourseVM = new TraineeCourseViewModel()
+            {
+                Courses = courses,
+                Trainees = users,
+                TraineeCourse = new TraineeCourse()
+            };
+
+            return View(TraineeCourseVM);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Create(TraineeCourseViewModel model)
+        {
+            //get trainee
+            //declare the variable "role" to construct data from the source table "Roles" in the column "Name" containing "Trainee" then select
+            var role = (from r in _context.Roles where r.Name.Contains("Trainee") select r).FirstOrDefault();
+            var users = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
+
+            //get course
+
+            var courses = _context.Courses.ToList();
+
+
+            if (ModelState.IsValid)
+            {
+                _context.TraineeCourses.Add(model.TraineeCourse);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            var TraineeCourseVM = new TraineeCourseViewModel()
+            {
+                Courses = courses,
+                Trainees = users,
+                TraineeCourse = new TraineeCourse()
+            };
+
+            return View(TraineeCourseVM);
+        }
+        [HttpGet]
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Edit(int id)
+        {
+            var tcInDb = _context.TraineeCourses.SingleOrDefault(p => p.Id == id);
+            if (tcInDb == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new TraineeCourseViewModel
+            {
+                TraineeCourse = tcInDb,
+                Courses = _context.Courses.ToList(),
+
+            };
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Edit(TraineeCourse traineeCourse)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var tcInDb = _context.TraineeCourses.SingleOrDefault(p => p.Id == traineeCourse.Id);
+            if (tcInDb == null)
+            {
+                return HttpNotFound();
+            }
+            tcInDb.CourseId = traineeCourse.CourseId;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Delete(int id)
+        {
+            var traineecourseInDb = _context.TraineeCourses.SingleOrDefault(p => p.Id == id);
+
+            if (traineecourseInDb == null)
+            {
+                return HttpNotFound();
+            }
+            _context.TraineeCourses.Remove(traineecourseInDb);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+
+        }
+    }
+}
