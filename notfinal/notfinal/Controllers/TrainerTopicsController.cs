@@ -57,31 +57,30 @@ namespace notfinal.Controllers
 
         [HttpPost]
         [Authorize(Roles = "TrainingStaff")]
-        public ActionResult Create(TrainerTopicViewModel model)
+        public ActionResult Create(TrainerTopic trainerTopic)
         {
-            //get trainer
-            var role = (from r in _context.Roles where r.Name.Contains("Trainer") select r).FirstOrDefault();
-            var users = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
 
-            //get topic
-            var topics = _context.Topics.ToList();
-
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.TrainerTopics.Add(model.TrainerTopic);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                return View();
+            }
+            var checkTrainerInTopic = _context.TrainerTopics.Any(c => c.TrainerId == trainerTopic.TrainerId &&
+                                                                       c.TopicId == trainerTopic.TopicId);
+            //Check if Trainer Name or Topic Name existed or not
+            if (checkTrainerInTopic == true)
+            {
+                return View("~/Views/TrainerTopics/Error.cshtml");
             }
 
-            var TrainerTopicVM = new TrainerTopicViewModel()
+            var newTrainerTopic = new TrainerTopic
             {
-                Topics = topics,
-                Trainers = users,
-                TrainerTopic = new TrainerTopic()
+                TrainerId = trainerTopic.TrainerId,
+                TopicId = trainerTopic.TopicId
             };
 
-            return View(TrainerTopicVM);
+            _context.TrainerTopics.Add(newTrainerTopic);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "TrainerTopics");
         }
         [HttpGet]
         [Authorize(Roles = "TrainingStaff")]

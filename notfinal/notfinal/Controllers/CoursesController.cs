@@ -54,12 +54,11 @@ namespace notfinal.Controllers
 			{
 				return View();
 			}
-
-			var checkCourseAndCategory = _context.Courses.Any(c => c.Name == course.Name);
-															
-			if (checkCourseAndCategory == true)
+			//Check if Course Name existed or not
+			if (_context.Courses.Any(c => c.Name == course.Name &&
+										  c.CategoryId == course.CategoryId))
 			{
-				return View();
+				return View("~/Views/Courses/Error.cshtml");
 			}
 
 			var newCourse = new Course

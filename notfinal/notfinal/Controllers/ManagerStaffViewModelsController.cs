@@ -19,6 +19,8 @@ namespace notfinal.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: ManagerStaffViewModels
+        [HttpGet]
+        [Authorize(Roles = "TrainingStaff")]
         public ActionResult Index()
         {
      

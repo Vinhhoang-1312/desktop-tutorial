@@ -285,6 +285,9 @@
     <Content Include="Views\TrainerTopics\Edit.cshtml" />
     <Content Include="Views\TrainerTopics\Index.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\TraineeCourses\Error.cshtml" />
+    <Content Include="Views\TrainerTopics\Error.cshtml" />
+    <Content Include="Views\Courses\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
