@@ -1,59 +1,35 @@
-﻿﻿@model notfinal.ViewModels.ManagerStaffViewModel
-@{ ViewBag.TiTle = "Index"; }
+﻿@model IEnumerable<notfinal.ViewModels.Users_In_Role>
+@{
+    ViewBag.Title = "Index";
+}
 @if (Request.IsAuthenticated && User.IsInRole("TrainingStaff"))
 {
-<p>
-    <a onclick="window.location='@Url.Action("Register", "Account")'" type="button" class="btn btn-default">Manage Accounts</a></p>}
+    <p>
+        <a onclick="window.location='@Url.Action("Register", "Account")'" type="button" class="btn btn-default">Create  </a> 
+    </p>}
+<h2>Index</h2>
 
-
-<h3>Trainee</h3>
-<div class="panel-body">
-    <table class="table table-striped" id="Index">
-        <thead>
-            <tr>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Edit</th>
-                <th>Delete</th>
-
-
-            </tr>
-        </thead>
-        @foreach (var user in Model.Trainee)
-        {
-<tr>
-    <td>@user.UserName </td>
-    <td> @user.Email</td>
-    <td> @user.RoleName</td>
-    <td>@Html.ActionLink("Edit", "Edit", new { id = user.UserId })</td>
-    <td>@Html.ActionLink("Delete", "Delete", new { id = user.UserId })</td>
- 
-
-</tr>}
-    </table>
-</div>
-<h3>Trainer</h3>
-<div class="panel-body">
-    <table class="table table-striped" id="Index">
-        <thead>
-            <tr>
-                <th>UserName</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
-        @foreach (var user in Model.Trainer)
-        {
-<tr>
-    <td>@user.UserName </td>
-    <td> @user.Email</td>
-    <td> @user.RoleName</td>
-    <td>@Html.ActionLink("Edit", "Edit", new { id = user.UserId })</td>
-</tr>
-}
-    </table>
-</div>
-
-
+<table class="table table-hover">
+    <tr>
+        <th>UserName</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Delete</th>
+        <th>Edit</th>
+     
+    </tr>
+    @foreach (var users in Model)
+    {
+        <tr>
+            @if ((users.Role.Contains("Admin") || users.Role.Contains("TrainingStaff")) == false)
+            {
+                <td>@users.Username</td>
+                <td>@users.Email</td>
+                <td>@users.Role</td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = users.UserId })</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = users.UserId })</td>
+             
+            }
+        </tr>
+    }
+</table>

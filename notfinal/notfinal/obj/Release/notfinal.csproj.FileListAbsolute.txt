@@ -109,3 +109,5 @@ C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.csproj.CoreCo
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.csproj.CopyComplete
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.dll
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.pdb
+C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.Migrations.qoi.resources
+C:\Users\tranp\source\repos\notfinal\notfinal\obj\Release\notfinal.Migrations.qwoei12.resources

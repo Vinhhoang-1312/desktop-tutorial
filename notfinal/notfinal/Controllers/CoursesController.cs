@@ -59,7 +59,7 @@ namespace notfinal.Controllers
 			if (_context.Courses.Any(c => c.Name == course.Name &&
 										  c.CategoryId == course.CategoryId))
 			{
-				return View("~/Views/Courses/Error.cshtml");
+				return View("~/Views/Courses/CheckExists.cshtml");
 			}
 
 			var newCourse = new Course
@@ -135,7 +135,18 @@ namespace notfinal.Controllers
 			_context.SaveChanges();
 
 			return RedirectToAction("Index");
+		}
+		[HttpGet]
+		public ActionResult Details(int id)
+		{
+			var courseInDb = _context.Courses.SingleOrDefault(p => p.Id == id);
 
+			if (courseInDb == null)
+			{
+				return HttpNotFound();
+			}
+
+			return View(courseInDb);
 		}
 	}
 }

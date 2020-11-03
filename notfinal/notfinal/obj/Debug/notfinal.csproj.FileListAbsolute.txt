@@ -109,3 +109,5 @@ C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.pdb
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.Migrations.ơie.resources
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.csproj.GenerateResource.cache
 C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.Migrations.oi.resources
+C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.Migrations.qoi.resources
+C:\Users\tranp\source\repos\notfinal\notfinal\obj\Debug\notfinal.Migrations.qwoei12.resources

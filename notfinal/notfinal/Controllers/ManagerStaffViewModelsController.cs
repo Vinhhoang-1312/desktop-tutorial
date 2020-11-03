@@ -58,6 +58,7 @@ namespace notfinal.Controllers
 
             _context.Users.Remove(AccountInDB);
             _context.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -109,7 +110,6 @@ namespace notfinal.Controllers
             {
                 return HttpNotFound();
             }
-
             if (AccountInDB.Id != null)
             {
                 UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());

@@ -189,6 +189,14 @@
     <Compile Include="Migrations\202010290901466_oi.Designer.cs">
       <DependentUpon>202010290901466_oi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011030731023_qoi.cs" />
+    <Compile Include="Migrations\202011030731023_qoi.designer.cs">
+      <DependentUpon>202011030731023_qoi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011030735465_qwoei12.cs" />
+    <Compile Include="Migrations\202011030735465_qwoei12.designer.cs">
+      <DependentUpon>202011030735465_qwoei12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -312,6 +320,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010290901466_oi.resx">
       <DependentUpon>202010290901466_oi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011030731023_qoi.resx">
+      <DependentUpon>202011030731023_qoi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011030735465_qwoei12.resx">
+      <DependentUpon>202011030735465_qwoei12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

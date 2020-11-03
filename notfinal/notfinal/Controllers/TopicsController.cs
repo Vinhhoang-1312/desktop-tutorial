@@ -35,8 +35,6 @@ namespace notfinal.Controllers
 			return View(topics.ToList());
 		}
 
-
-
 		[HttpGet]
 		[Authorize(Roles = "TrainingStaff")]
 		public ActionResult Create()
@@ -57,12 +55,12 @@ namespace notfinal.Controllers
 				return View();
 			}
 
-			if (_context.Topics.Any(p => p.Name.Contains(topic.Name)))
+			//Check if Topic Name existed or not
+			if (_context.Topics.Any(c => c.Name == topic.Name &&
+										  c.CourseId == topic.CourseId))
 			{
-				ModelState.AddModelError("Name", "Topic Name Already Exists.");
-				return View();
+				return View("~/Views/Topics/CheckExists.cshtml");
 			}
-
 			var newTopic = new Topic
 			{
 				Name = topic.Name,
@@ -99,17 +97,18 @@ namespace notfinal.Controllers
 		[Authorize(Roles = "TrainingStaff")]
 		public ActionResult Edit(int id)
 		{
-			var topicInDb = _context.Topics.SingleOrDefault(p => p.Id == id);
-
+			var topicInDb = _context.Topics.SingleOrDefault(c => c.Id == id);
 			if (topicInDb == null)
 			{
 				return HttpNotFound();
 			}
+
 			var viewModel = new TopicCourseViewModel
 			{
 				Topic = topicInDb,
-				Courses = _context.Courses.ToList(),
+				Courses = _context.Courses.ToList()
 			};
+
 			return View(viewModel);
 		}
 
@@ -122,23 +121,39 @@ namespace notfinal.Controllers
 				return View();
 			}
 
-			var topicInDb = _context.Topics.SingleOrDefault(p => p.Id == topic.Id);
+			var topicInDb = _context.Topics.SingleOrDefault(c => c.Id == topic.Id);
 
 			if (topicInDb == null)
 			{
 				return HttpNotFound();
 			}
 
-			topicInDb.Name = topicInDb.Name;
-			topicInDb.Description = topicInDb.Description;
-			topicInDb.CourseId = topicInDb.CourseId;
-
-
+			var checkTopicAndCourse = _context.Topics.Any(c => c.Name == topic.Name &&
+																   c.CourseId == topic.CourseId);
+			if (checkTopicAndCourse == true)
+			{
+				return View("~/Views/TrainerTopics/AssignExistTrainerTopic.cshtml");
+			}
+			topicInDb.Name = topic.Name;
+			topicInDb.Description = topic.Description;
+			topicInDb.CourseId = topic.CourseId;
 			_context.SaveChanges();
-
 			return RedirectToAction("Index");
 		}
-		
+		// GET: Topics/Details/5
+		[HttpGet]
+		[Authorize(Roles = "TrainingStaff")]
+		public ActionResult Details(int id)
+		{
+			var topicInDb = _context.Topics.SingleOrDefault(p => p.Id == id);
+
+			if (topicInDb == null)
+			{
+				return HttpNotFound();
+			}
+
+			return View(topicInDb);
+		}
 
 	}
 }

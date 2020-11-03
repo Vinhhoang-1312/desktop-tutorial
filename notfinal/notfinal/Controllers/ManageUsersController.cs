@@ -111,20 +111,7 @@ namespace notfinal.Controllers
 
             return RedirectToAction("UsersWithRoles");
 
-        }
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public ActionResult Details(string id)
-        {
-            var usersInDb = _context.Users.SingleOrDefault(p => p.Id == id);
-
-            if (usersInDb == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(usersInDb);
-     
+        
         }
     }
 }
