@@ -111,24 +111,6 @@ namespace notfinal.Controllers
             return RedirectToAction("Index", "ManagerStaffViewModels");
 
         }
-        [Authorize(Roles = "TrainingStaff")]
-        public ActionResult ResetPass(ApplicationUser user)
-        {
-            // Declare the userId variable of Current.User.Identity and access the Id field through GetUserId
-            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            userId = user.Id;
-            if (userId != null)
-            {
-                // userManager by managing new users, bringing new data
-                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-                // Delete current password of userManager
-                userManager.RemovePassword(userId);
-                // Replace new password "A456456a @" for userManager
-                String newPassword = "A456456a@";
-                userManager.AddPassword(userId, newPassword);
-            }
-            _context.SaveChanges();
-            return RedirectToAction("Index", "ManagerStaffViewModels");
-        }
+    
     }
 }

@@ -19,7 +19,7 @@ namespace notfinal.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
+        [Authorize(Roles = "TrainingStaff")]
         public ActionResult Index()
         {
             if (User.IsInRole("TrainingStaff"))

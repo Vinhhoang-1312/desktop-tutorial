@@ -19,6 +19,7 @@ namespace notfinal.Controllers
 		}
 		// GET: Course
 		[HttpGet]
+		[Authorize(Roles = "TrainingStaff")]
 		public ActionResult Index(string searchString)
 		{
 			var courses = _context.Courses

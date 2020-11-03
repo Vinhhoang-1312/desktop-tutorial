@@ -20,6 +20,7 @@ namespace notfinal.Controllers
 		}
 		// GET: Topic
 		[HttpGet]
+		[Authorize(Roles = "TrainingStaff")]
 		public ActionResult Index(string searchString)
 		{
 			var topics = _context.Topics
@@ -95,6 +96,7 @@ namespace notfinal.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = "TrainingStaff")]
 		public ActionResult Edit(int id)
 		{
 			var topicInDb = _context.Topics.SingleOrDefault(p => p.Id == id);
