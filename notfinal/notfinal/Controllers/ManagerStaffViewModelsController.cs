@@ -13,104 +13,112 @@ namespace notfinal.Controllers
 {
     public class ManagerStaffViewModelsController : Controller
     {
-        ApplicationDbContext _context;
+        private ApplicationDbContext _context;
         public ManagerStaffViewModelsController()
         {
             _context = new ApplicationDbContext();
         }
-        // GET: ManagerStaffViewModels
-        [HttpGet]
+        // GET: Admin
         [Authorize(Roles = "TrainingStaff")]
         public ActionResult Index()
         {
-     
-            var role = (from r in _context.Roles where r.Name.Contains("Trainee") select r).FirstOrDefault();
-       
-            var users = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role.Id)).ToList();
-      
-            var userVM = users.Select(user => new ManagerStaffViewModel
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                RoleName = "Trainee",
-                UserId = user.Id
-            }).ToList();
-
-            var role2 = (from r in _context.Roles where r.Name.Contains("Trainer") select r).FirstOrDefault();
-
-            var admins = _context.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(role2.Id)).ToList();
-        
-            var adminVM = admins.Select(user => new ManagerStaffViewModel
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                RoleName = "Trainer",
-                UserId = user.Id
-            }).ToList();
-
-
-            var model = new ManagerStaffViewModel { Trainee = userVM, Trainer = adminVM };
-            return View(model);
+            var userInfor = (from user in _context.Users
+                             select new
+                             {
+                                 UserId = user.Id,
+                                 Username = user.UserName,
+                                 EmailAddress = user.Email,
+                                 RoleName = (from userRole in user.Roles
+                                             join role in _context.Roles
+                                             on userRole.RoleId
+                                             equals role.Id
+                                             select role.Name)
+                             }
+                       ).ToList().Select(p => new Users_In_Role()
+                       {
+                           UserId = p.UserId,
+                           Username = p.Username,
+                           Email = p.EmailAddress,
+                           Role = string.Join(",", p.RoleName)
+                       }
+                       );
+            return View(userInfor);
         }
+        //DELETE ACCOUNT
+        [HttpGet]
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult Delete(string id)
+        {
+            var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);
+
+            if (AccountInDB == null)
+            {
+                return HttpNotFound();
+            }
+
+            _context.Users.Remove(AccountInDB);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //Edit 
         [HttpGet]
         [Authorize(Roles = "TrainingStaff")]
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);
+            if (AccountInDB == null)
             {
                 return HttpNotFound();
             }
-            var appUser = _context.Users.Find(id);
-            if (appUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(appUser);
+            return View(AccountInDB);
         }
 
+        //EDIT
         [HttpPost]
         [Authorize(Roles = "TrainingStaff")]
         public ActionResult Edit(ApplicationUser user)
         {
-            var userInDb = _context.Users.Find(user.Id);
-
-            if (userInDb == null)
+            if (!ModelState.IsValid)
             {
-                return View(user);
+                return View();
             }
 
-            if (ModelState.IsValid)
-            {
-                userInDb.Name = user.Name;
-                userInDb.UserName = user.UserName;
-                userInDb.Phone = user.Phone;
-                userInDb.Email = user.Email;
+            var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == user.Id);
 
-
-                _context.Users.AddOrUpdate(userInDb);
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "ManagerStaffViewModels");
-            }
-            return View(user);
-
-        }
-
-        [Authorize(Roles = "TrainingStaff")]
-        public ActionResult Delete(string id)
-        {
-            var userInDb = _context.Users.SingleOrDefault(p => p.Id == id);
-
-            if (userInDb == null)
+            if (AccountInDB == null)
             {
                 return HttpNotFound();
             }
-            _context.Users.Remove(userInDb);
+
+            AccountInDB.UserName = user.UserName;
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "ManagerStaffViewModels");
-
+            return RedirectToAction("Index");
         }
-    
+
+
+        //RESET PASSWORD
+        [HttpGet]
+        [Authorize(Roles = "TrainingStaff")]
+        public ActionResult ResetPass(string id)
+        {
+            var AccountInDB = _context.Users.SingleOrDefault(p => p.Id == id);
+
+            if (AccountInDB == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (AccountInDB.Id != null)
+            {
+                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+                userManager.RemovePassword(AccountInDB.Id);
+                String newPassword = "A456456a@";
+                userManager.AddPassword(AccountInDB.Id, newPassword);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
