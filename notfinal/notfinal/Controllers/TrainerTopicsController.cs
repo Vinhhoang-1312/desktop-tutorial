@@ -19,7 +19,7 @@ namespace notfinal.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        [Authorize(Roles = "TrainingStaff")]
+
         public ActionResult Index()
         {
             if (User.IsInRole("TrainingStaff"))
@@ -36,6 +36,7 @@ namespace notfinal.Controllers
             return View("Login");
         }
         [Authorize(Roles = "TrainingStaff")]
+
         public ActionResult Create()
         {
             //get trainer
@@ -91,6 +92,7 @@ namespace notfinal.Controllers
             {
                 return HttpNotFound();
             }
+
             var viewModel = new TrainerTopicViewModel
             {
                 TrainerTopic = ttInDb,

@@ -10,6 +10,8 @@ using notfinal.ViewModels;
 
 namespace notfinal.Controllers
 {
+
+
     public class TraineeCoursesController : Controller
     {
         private ApplicationDbContext _context;
@@ -18,7 +20,7 @@ namespace notfinal.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        [Authorize(Roles = "TrainingStaff")]
+
         public ActionResult Index()
         {
             if (User.IsInRole("TrainingStaff"))
@@ -34,7 +36,11 @@ namespace notfinal.Controllers
             }
             return View("Login");
         }
+
+
+
         [Authorize(Roles = "TrainingStaff")]
+
         public ActionResult Create()
         {
             //get trainee
@@ -80,6 +86,7 @@ namespace notfinal.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         [Authorize(Roles = "TrainingStaff")]
         public ActionResult Edit(int id)

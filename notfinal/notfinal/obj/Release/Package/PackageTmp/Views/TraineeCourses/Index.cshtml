@@ -5,36 +5,36 @@
 <h2>Courses</h2>
 @if (User.IsInRole("TrainingStaff"))
 {
-<p>
-    @Html.ActionLink("Assign Trainee to Course", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Assign Trainee to Course", "Create")
+    </p>
 
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Trainee)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Course)
-                        </th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Trainee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
 
-                    @foreach (var item in Model)
-                    {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Trainee.UserName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Course.Name)
-                    </td>
-                    <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
-                    <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
-                </tr>
-}
-                </table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trainee.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
+            </tr>
+        }
+    </table>
 }
 @if (User.IsInRole("Trainee"))
 {<table class="table">
@@ -46,12 +46,11 @@
         </tr>
         @foreach (var item in Model)
         {
- <tr>
-     <td>
-         @Html.DisplayFor(modelItem => item.Course.Name)
-     </td>
- </tr>
-}
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+            </tr>
+        }
     </table>}
 @Html.ActionLink("Back to home", "Index", "Home")
-
